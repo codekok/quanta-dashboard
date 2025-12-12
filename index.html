@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>廣達游於智計畫 - 校園推廣成果儀表板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: "Microsoft JhengHei", sans-serif; background-color: #f3f4f6; }
+        #map { height: 600px; width: 100%; z-index: 1; }
+        .chart-container { position: relative; height: 250px; width: 100%; }
+        /* 自定義捲軸 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden">
+
+    <header class="bg-blue-800 text-white p-4 shadow-md z-20">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <h1 class="text-2xl font-bold"><i class="fas fa-school mr-2"></i>廣達游於智計畫推廣儀表板</h1>
+                <p class="text-blue-200 text-sm mt-1">2018-2025 校園參與全景</p>
+            </div>
+            
+            <div class="flex gap-4 bg-blue-700 p-2 rounded-lg">
+                <div>
+                    <label class="block text-xs text-blue-200 mb-1">選擇年度</label>
+                    <select id="yearSelect" class="bg-white text-gray-800 rounded px-3 py-1 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+                        <option value="all">總覽 (2018-2025)</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-blue-200 mb-1">方案類型</label>
+                    <select id="schemeSelect" class="bg-white text-gray-800 rounded px-3 py-1 text-sm outline-none focus:ring-2 focus:ring-blue-400">
+                        <option value="all">所有方案</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col md:flex-row overflow-hidden">
+        
+        <div class="w-full md:w-2/3 h-1/2 md:h-full relative shadow-inner">
+            <div id="map" class="h-full w-full"></div>
+            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur p-3 rounded shadow-lg z-[1000] border-l-4 border-blue-600">
+                <div class="text-gray-500 text-xs">當前顯示學校</div>
+                <div class="text-2xl font-bold text-blue-800" id="displayCount">0</div>
+            </div>
+        </div>
+
+        <div class="w-full md:w-1/3 h-1/2 md:h-full bg-white flex flex-col overflow-y-auto border-l border-gray-200">
+            <div class="grid grid-cols-2 gap-3 p-4 bg-gray-50 border-b">
+                <div class="bg-white p-3 rounded shadow-sm border border-gray-100">
+                    <div class="text-gray-500 text-xs mb-1">參與人次(校次)</div>
+                    <div class="text-xl font-bold text-indigo-600" id="totalVisits">0</div>
+                </div>
+                <div class="bg-white p-3 rounded shadow-sm border border-gray-100">
+                    <div class="text-gray-500 text-xs mb-1">覆蓋縣市</div>
+                    <div class="text-xl font-bold text-emerald-600" id="cityCount">0</div>
+                </div>
+            </div>
+
+            <div class="p-4 space-y-6">
+                <div>
+                    <h3 class="text-sm font-bold text-gray-700 border-l-4 border-indigo-500 pl-2 mb-3">方案類型分布</h3>
+                    <div class="chart-container" style="height: 200px;">
+                        <canvas id="schemeChart"></canvas>
+                    </div>
+                </div>
+
+                <hr class="border-gray-100">
+
+                <div>
+                    <h3 class="text-sm font-bold text-gray-700 border-l-4 border-emerald-500 pl-2 mb-3">縣市參與排名 (Top 10)</h3>
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="cityChart"></canvas>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-bold text-gray-700 border-l-4 border-gray-500 pl-2 mb-3">詳細學校清單</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-xs text-left">
+                            <thead class="bg-gray-100 text-gray-600 uppercase">
+                                <tr>
+                                    <th class="px-3 py-2">年度</th>
+                                    <th class="px-3 py-2">縣市</th>
+                                    <th class="px-3 py-2">學校</th>
+                                    <th class="px-3 py-2">方案</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schoolTableBody" class="divide-y divide-gray-100">
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-center text-gray-400 text-xs mt-2" id="tableFooter">顯示前 50 筆資料</p>
+                </div>
+            </div>
+            
+            <footer class="p-4 bg-gray-800 text-gray-400 text-xs text-center mt-auto">
+                <p>Designed by Gemini AI &amp; Vibe Coding</p>
+            </footer>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <script>
+        const cityCoords = {
+            "臺北市": [25.0330, 121.5654], "新北市": [24.9157, 121.6739], "基隆市": [25.1276, 121.7392],
+            "桃園市": [24.9936, 121.3010], "新竹市": [24.8138, 120.9675], "新竹縣": [24.7032, 121.1252],
+            "苗栗縣": [24.5602, 120.8214], "臺中市": [24.1477, 120.6736], "彰化縣": [23.9929, 120.4818],
+            "南投縣": [23.9609, 120.9718], "雲林縣": [23.7092, 120.4313], "嘉義市": [23.4800, 120.4491],
+            "嘉義縣": [23.4518, 120.2554], "臺南市": [22.9997, 120.2270], "高雄市": [22.6272, 120.3014],
+            "屏東縣": [22.5519, 120.5487], "宜蘭縣": [24.7021, 121.7377], "花蓮縣": [23.9871, 121.6011],
+            "臺東縣": [22.7613, 121.1444], "澎湖縣": [23.5711, 119.5793], "金門縣": [24.4403, 118.3232],
+            "連江縣": [26.1505, 119.9264]
+        };
+
+        const schemeColors = {
+            "普及方案": "#3b82f6", "精進方案": "#10b981", "續航方案": "#f59e0b",
+            "普及+精進方案": "#8b5cf6", "教具漂移": "#ec4899", "策略聯盟": "#6366f1",
+            "POC": "#64748b", "教學創新": "#14b8a6", "精進Plus": "#ef4444"
+        };
+
+        let rawData = [];
+        let map;
+        let markers = [];
+        let charts = {};
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initMap();
+            loadCSV();
+            document.getElementById('yearSelect').addEventListener('change', updateDashboard);
+            document.getElementById('schemeSelect').addEventListener('change', updateDashboard);
+        });
+
+        function initMap() {
+            map = L.map('map').setView([23.8, 121], 7);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 18
+            }).addTo(map);
+        }
+
+        function loadCSV() {
+            Papa.parse("all_schools_data.csv", {
+                download: true,
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    rawData = results.data;
+                    console.log(`已載入 ${rawData.length} 筆資料`);
+                    populateSchemeFilter();
+                    updateDashboard();
+                },
+                error: function(err) {
+                    alert("無法讀取資料！請確保 all_schools_data.csv 檔案已上傳且名稱正確。");
+                }
+            });
+        }
+
+        function populateSchemeFilter() {
+            const schemes = [...new Set(rawData.map(d => d.方案))].filter(Boolean);
+            const select = document.getElementById('schemeSelect');
+            schemes.forEach(s => {
+                const option = document.createElement('option');
+                option.value = s;
+                option.textContent = s;
+                select.appendChild(option);
+            });
+        }
+
+        function updateDashboard() {
+            const selectedYear = document.getElementById('yearSelect').value;
+            const selectedScheme = document.getElementById('schemeSelect').value;
+
+            let filteredData = rawData.filter(row => {
+                const yearMatch = selectedYear === 'all' || row.年度 == selectedYear;
+                const schemeMatch = selectedScheme === 'all' || row.方案 == selectedScheme;
+                return yearMatch && schemeMatch && row.縣市;
+            });
+
+            document.getElementById('displayCount').textContent = filteredData.length;
+            document.getElementById('totalVisits').textContent = filteredData.length;
+            const uniqueCities = new Set(filteredData.map(d => d.縣市));
+            document.getElementById('cityCount').textContent = uniqueCities.size;
+
+            updateMap(filteredData);
+            updateCharts(filteredData);
+            updateTable(filteredData);
+        }
+
+        function getJitteredCoord(lat, lng) {
+            const jitter = 0.03;
+            return [
+                lat + (Math.random() - 0.5) * jitter,
+                lng + (Math.random() - 0.5) * jitter
+            ];
+        }
+
+        function updateMap(data) {
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+
+            data.forEach(row => {
+                const cityName = row.縣市.trim();
+                if (cityCoords[cityName]) {
+                    const [lat, lng] = getJitteredCoord(cityCoords[cityName][0], cityCoords[cityName][1]);
+                    const color = schemeColors[row.方案] || "#6b7280";
+
+                    const marker = L.circleMarker([lat, lng], {
+                        radius: 6,
+                        fillColor: color,
+                        color: "#fff",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(map);
+
+                    const popupContent = `
+                        <div class="font-bold text-base text-blue-900">${row.學校名稱}</div>
+                        <div class="text-sm text-gray-600">${row.縣市} | ${row.年度}</div>
+                        <div class="mt-1 inline-block px-2 py-0.5 rounded text-white text-xs" style="background:${color}">
+                            ${row.方案}
+                        </div>
+                    `;
+                    marker.bindPopup(popupContent);
+                    marker.bindTooltip(row.學校名稱);
+                    markers.push(marker);
+                }
+            });
+        }
+
+        function updateCharts(data) {
+            const schemeCounts = {};
+            data.forEach(d => {
+                schemeCounts[d.方案] = (schemeCounts[d.方案] || 0) + 1;
+            });
+
+            const cityCounts = {};
+            data.forEach(d => {
+                cityCounts[d.縣市] = (cityCounts[d.縣市] || 0) + 1;
+            });
+            const sortedCities = Object.entries(cityCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            const schemeCtx = document.getElementById('schemeChart').getContext('2d');
+            if (charts.scheme) charts.scheme.destroy();
+            
+            charts.scheme = new Chart(schemeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(schemeCounts),
+                    datasets: [{
+                        data: Object.values(schemeCounts),
+                        backgroundColor: Object.keys(schemeCounts).map(k => schemeColors[k] || '#ccc'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } }
+                    }
+                }
+            });
+
+            const cityCtx = document.getElementById('cityChart').getContext('2d');
+            if (charts.city) charts.city.destroy();
+
+            charts.city = new Chart(cityCtx, {
+                type: 'bar',
+                data: {
+                    labels: sortedCities.map(i => i[0]),
+                    datasets: [{
+                        label: '參與次數',
+                        data: sortedCities.map(i => i[1]),
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { x: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function updateTable(data) {
+            const tbody = document.getElementById('schoolTableBody');
+            tbody.innerHTML = '';
+            
+            const displayData = data.slice(0, 50);
+            
+            displayData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-blue-50 transition-colors border-b border-gray-100";
+                const schemeColor = schemeColors[row.方案] || "#999";
+                
+                tr.innerHTML = `
+                    <td class="px-3 py-2 text-gray-500">${row.年度}</td>
+                    <td class="px-3 py-2 font-medium">${row.縣市}</td>
+                    <td class="px-3 py-2">${row.學校名稱}</td>
+                    <td class="px-3 py-2">
+                        <span class="px-2 py-0.5 rounded-full text-white text-[10px]" style="background:${schemeColor}">
+                            ${row.方案}
+                        </span>
+                    </td>
+                `;
+                
+                tr.addEventListener('click', () => {
+                    const targetMarker = markers.find(m => m.getPopup().getContent().includes(row.學校名稱));
+                    if(targetMarker) {
+                        targetMarker.openPopup();
+                        map.flyTo(targetMarker.getLatLng(), 10);
+                    }
+                });
+                
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>
