@@ -283,25 +283,34 @@ const uniqueSchools = new Set(filteredData.map(d => `${d.縣市.trim()}｜${d.�
             });
 
             const sortedUniqueCities = Object.entries(cityUniqueCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
-            if(charts.unique) charts.unique.destroy();
-            charts.unique = new Chart(document.getElementById('uniqueCityChart'), {
-                type: 'bar',
-                data: { labels: sortedUniqueCities.map(d => d[0]), datasets: [{ label: '校數', data: sortedUniqueCities.map(d => d[1]), backgroundColor: '#6366f1', borderRadius: 4 }] },
-                options: {
-    indexAxis: 'y',
-    maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: {
-        y: {
-            ticks: {
-                font: {
-                    size: 14 // 將字體大小設定為 14px (預設通常是 12px)
+            // 約 284 行
+if(charts.unique) charts.unique.destroy();
+charts.unique = new Chart(document.getElementById('uniqueCityChart'), {
+    type: 'bar',
+    data: { 
+        labels: sortedUniqueCities.map(d => d[0]), 
+        datasets: [{ 
+            label: '校數', 
+            data: sortedUniqueCities.map(d => d[1]), 
+            backgroundColor: '#6366f1', 
+            borderRadius: 4 
+        }] 
+    },
+    options: { 
+        indexAxis: 'y', 
+        maintainAspectRatio: false, 
+        plugins: { legend: { display: false } },
+        scales: {
+            y: {
+                ticks: {
+                    font: {
+                        size: 12 // 這裡可以調整您想要的字體大小
+                    }
                 }
             }
         }
     }
-}
-
+});
             const coverageData = [];
             Object.keys(cityUniqueCounts).forEach(city => {
                 const participating = cityUniqueCounts[city];
