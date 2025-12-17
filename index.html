@@ -98,7 +98,7 @@
                     <div class="text-2xl font-bold text-blue-600" id="kpiVisits">0</div>
                 </div>
                 <div class="bg-white p-4 text-center hover:bg-slate-50 transition group cursor-default">
-                    <div class="text-xs text-slate-500 mb-1">不重複學校</div>
+                    <div class="text-xs text-slate-500 mb-1">不重複參與學校數</div>
                     <div class="text-2xl font-bold text-indigo-600" id="kpiUniqueSchools">0</div>
                 </div>
                 <div class="bg-white p-4 text-center hover:bg-slate-50 transition group cursor-default">
@@ -121,7 +121,7 @@
                         <span class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded font-mono" id="tableInfo">共 0 筆</span>
                     </div>
                     <div class="flex-1 overflow-auto border rounded-lg border-slate-200 relative shadow-inner custom-scrollbar">
-                        <table class="min-w-full text-xs text-left">
+                        <table class="min-w-full text-base text-left">
                             <thead class="bg-slate-50 text-slate-600 uppercase font-bold sticky top-0 z-10 shadow-sm">
                                 <tr>
                                     <th class="px-3 py-2.5 border-b border-slate-200 bg-slate-50 w-16">年度</th>
@@ -241,7 +241,7 @@ Papa.parse('./all_schools_data.csv', {
 
             document.getElementById('kpiVisits').textContent = filteredData.length;
             
-            // 不重複學校計算邏輯：只看 縣市+學校
+            // 不重複參與學校數計算邏輯：只看 縣市+學校
             // 修正後的程式碼 (加入 trim() 清理空白字元)
 const uniqueSchools = new Set(filteredData.map(d => `${d.縣市.trim()}｜${d.學校名稱.trim()}`));
             document.getElementById('kpiUniqueSchools').textContent = uniqueSchools.size;
