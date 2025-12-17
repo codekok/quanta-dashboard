@@ -241,7 +241,8 @@
             document.getElementById('kpiVisits').textContent = filteredData.length;
             
             // 不重複學校計算邏輯：只看 縣市+學校
-            const uniqueSchools = new Set(filteredData.map(d => `${d.縣市}｜${d.學校名稱}`));
+            // 修正後的程式碼 (加入 trim() 清理空白字元)
+const uniqueSchools = new Set(filteredData.map(d => `${d.縣市.trim()}｜${d.學校名稱.trim()}`));
             document.getElementById('kpiUniqueSchools').textContent = uniqueSchools.size;
             
             const uniqueCities = new Set(filteredData.map(d => d.縣市));
