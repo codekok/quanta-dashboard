@@ -18,9 +18,12 @@
         body { font-family: "Microsoft JhengHei", "Heiti TC", sans-serif; background-color: #f8fafc; }
         #map { height: 100%; width: 100%; border-radius: 0.5rem; z-index: 1; }
         .chart-container { position: relative; height: 250px; width: 100%; }
+        
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
         .pagination-btn {
             padding: 4px 12px; border: 1px solid #e2e8f0; border-radius: 6px;
             font-size: 0.875rem; background-color: white; color: #475569; transition: all 0.2s;
@@ -185,15 +188,14 @@
         }
 
         function loadData() {
-            // 從外部 CSV 讀取，並自動識別 '年份' 或 '年度'
             Papa.parse('./all_schools_data.csv', {
                 download: true, header: true, skipEmptyLines: true,
                 complete: function(results) {
                     rawData = results.data.map(d => {
-                        // 標準化欄位：同時支援 '年份' 與 '年度'
+                        // 自動判斷「年份」或「年度」，解決 undefined 問題
                         d.年度 = d.年份 || d.年度; 
                         return d;
-                    }).filter(d => d.縣市 && d.學校名稱 && d.年度); // 防呆：過濾掉無效列
+                    }).filter(d => d.縣市 && d.學校名稱 && d.年度);
                     
                     initFilters();
                     updateDashboard();
@@ -205,7 +207,7 @@
         function initFilters() {
             const years = [...new Set(rawData.map(d => d.年度))].sort();
             const yearSel = document.getElementById('yearSelect');
-            yearSel.innerHTML = '<option value="all">📅 所有年度</option>'; // 重置
+            yearSel.innerHTML = '<option value="all">📅 所有年度</option>';
             years.forEach(y => yearSel.add(new Option(y + '年', y)));
 
             const cities = Object.keys(cityCoords);
@@ -238,7 +240,7 @@
 
             document.getElementById('kpiVisits').textContent = filteredData.length;
             
-            // 不重複學校：只看「縣市」+「學校名稱」，不管方案
+            // 不重複學校計算邏輯：只看 縣市+學校
             const uniqueSchools = new Set(filteredData.map(d => `${d.縣市}｜${d.學校名稱}`));
             document.getElementById('kpiUniqueSchools').textContent = uniqueSchools.size;
             
@@ -271,7 +273,6 @@
             const schoolsTracker = new Set();
             
             filteredData.forEach(d => {
-                // 不重複邏輯：只看 縣市+校名
                 const key = `${d.縣市}｜${d.學校名稱}`;
                 if (!schoolsTracker.has(key)) {
                     schoolsTracker.add(key);
