@@ -26,10 +26,12 @@
     <header class="bg-slate-900 text-white p-3 shadow-lg z-20 flex-none">
         <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center gap-3">
             <div class="flex items-center">
-                <img src="./logo.png" alt="廣達游於智 Logo" class="h-10 w-auto mr-3 object-contain" onerror="this.onerror=null;this.src='';this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden');">
+                <img src="./logo.png" alt="Logo" class="h-10 w-auto mr-3 object-contain" 
+                     onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
                 <div class="bg-blue-600 p-2 rounded-lg mr-3 shadow-lg hidden">
                     <i class="fas fa-seedling text-xl text-white"></i>
                 </div>
+                
                 <div>
                     <h1 class="text-xl font-bold tracking-wide">廣達游於智：教育影響力地圖</h1>
                     <p class="text-slate-400 text-xs">2018-2025 程式教育推廣足跡 (資料更新日：2025/12/16)</p>
@@ -55,9 +57,7 @@
     </header>
 
     <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
-        
         <div class="w-full lg:w-3/5 h-full flex flex-col p-3 gap-3 overflow-y-auto">
-            
             <div class="bg-white p-1 shadow rounded-lg border border-slate-200 relative h-[550px] flex-none group">
                 <div id="map"></div>
                 <div class="absolute top-3 right-3 bg-white/95 backdrop-blur px-4 py-3 rounded-lg shadow-xl z-[500] border-l-4 border-blue-600 transition transform group-hover:scale-105">
@@ -65,7 +65,6 @@
                     <div class="text-3xl font-bold text-slate-800 mt-1" id="mapDisplayCount">0</div>
                 </div>
             </div>
-
             <div class="bg-white p-4 shadow rounded-lg border border-slate-200 flex-none">
                 <div class="flex justify-between items-center mb-2">
                     <h3 class="text-sm font-bold text-slate-700 flex items-center">
@@ -83,7 +82,6 @@
         </div>
 
         <div class="w-full lg:w-2/5 h-full bg-white border-l border-slate-200 flex flex-col overflow-hidden">
-            
             <div class="grid grid-cols-3 gap-0 border-b border-slate-100 bg-slate-50 shrink-0">
                 <div class="p-4 text-center border-r border-slate-100 hover:bg-slate-100 transition">
                     <div class="text-xs text-slate-500 mb-1">總參與人次</div>
@@ -100,22 +98,18 @@
             </div>
 
             <div class="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
-                
                 <div>
                     <h3 class="text-sm font-bold text-slate-700 border-l-4 border-indigo-500 pl-2 mb-3">不重複參與校數排名 (Top 10)</h3>
                     <div class="chart-container" style="height: 200px;">
                         <canvas id="uniqueCityChart"></canvas>
                     </div>
                 </div>
-
                 <hr class="border-slate-100">
-
                 <div class="flex flex-col h-[450px]">
                     <div class="flex justify-between items-end mb-2 shrink-0">
                         <h3 class="text-sm font-bold text-slate-700 border-l-4 border-slate-500 pl-2">詳細學校清單</h3>
                         <span class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded font-mono" id="tableInfo">共 0 筆</span>
                     </div>
-                    
                     <div class="flex-1 overflow-auto border rounded border-slate-200 relative shadow-inner">
                         <table class="min-w-full text-xs text-left">
                             <thead class="bg-slate-50 text-slate-600 uppercase font-bold sticky top-0 z-10 shadow-sm">
@@ -126,11 +120,9 @@
                                     <th class="px-3 py-2 border-b bg-slate-50 text-right">方案</th>
                                 </tr>
                             </thead>
-                            <tbody id="schoolTableBody" class="divide-y divide-slate-100 bg-white">
-                                </tbody>
+                            <tbody id="schoolTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
                         </table>
                     </div>
-                    
                     <div class="flex justify-between items-center mt-3 shrink-0 pt-2 border-t border-slate-100 bg-white">
                         <button id="prevBtn" class="pagination-btn"><i class="fas fa-chevron-left mr-1"></i>上一頁</button>
                         <span id="pageIndicator" class="text-xs text-slate-600 font-medium">第 1 頁</span>
@@ -144,9 +136,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // ==========================================
-        // 資料設定區 (已合併 2018-2025 共 905 筆資料)
-        // ==========================================
+        // 資料設定區 (確保這裡有完整的資料)
         const csvContent = `縣市,學校名稱,方案,年度
 雲林縣,光復國小,POC,2018
 雲林縣,新生國小,POC,2018
@@ -903,4 +893,206 @@
 彰化縣,員東國小,營隊,2025
 彰化縣,和仁國小,營隊,2025
 彰化縣,湖北國小,營隊,2025
-彰化縣,明聖國小,營隊,2025
+彰化縣,明聖國小,營隊,2025`;
+
+        const totalSchoolsData = {
+            "新北市": 222, "臺北市": 154, "桃園市": 191, "臺中市": 244, "臺南市": 216, "高雄市": 245, 
+            "宜蘭縣": 78, "新竹縣": 87, "苗栗縣": 114, "彰化縣": 174, "南投縣": 139, "雲林縣": 157, 
+            "嘉義縣": 121, "屏東縣": 163, "臺東縣": 89, "花蓮縣": 104, "澎湖縣": 35, "基隆市": 41, 
+            "新竹市": 35, "嘉義市": 20, "金門縣": 19, "連江縣": 7
+        };
+
+        const cityCoords = {
+            "臺北市": [25.0330, 121.5654], "新北市": [24.9157, 121.6739], "基隆市": [25.1276, 121.7392],
+            "桃園市": [24.9936, 121.3010], "新竹市": [24.8138, 120.9675], "新竹縣": [24.7032, 121.1252],
+            "苗栗縣": [24.5602, 120.8214], "臺中市": [24.1477, 120.6736], "彰化縣": [23.9929, 120.4818],
+            "南投縣": [23.9609, 120.9718], "雲林縣": [23.7092, 120.4313], "嘉義市": [23.4800, 120.4491],
+            "嘉義縣": [23.4518, 120.2554], "臺南市": [22.9997, 120.2270], "高雄市": [22.6272, 120.3014],
+            "屏東縣": [22.5519, 120.5487], "宜蘭縣": [24.7021, 121.7377], "花蓮縣": [23.9871, 121.6011],
+            "臺東縣": [22.7613, 121.1444], "澎湖縣": [23.5711, 119.5793], "金門縣": [24.4403, 118.3232],
+            "連江縣": [26.1505, 119.9264]
+        };
+
+        const schemeColors = {
+            "普及方案": "#3b82f6", "精進方案": "#10b981", "續航方案": "#f59e0b",
+            "普及+精進方案": "#8b5cf6", "教具漂移": "#ec4899", "策略聯盟": "#6366f1",
+            "POC": "#64748b", "教學創新": "#14b8a6", "精進Plus": "#ef4444", 
+            "大學生": "#9ca3af", "營隊": "#f97316"
+        };
+
+        let rawData = [], filteredData = [], map, markers = [], charts = {};
+        let currentPage = 1;
+        const rowsPerPage = 15;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initMap();
+            loadData();
+            document.getElementById('yearSelect').addEventListener('change', updateDashboard);
+            document.getElementById('citySelect').addEventListener('change', updateDashboard);
+            document.getElementById('schemeSelect').addEventListener('change', updateDashboard);
+            document.getElementById('prevBtn').addEventListener('click', () => changePage(-1));
+            document.getElementById('nextBtn').addEventListener('click', () => changePage(1));
+        });
+
+        function initMap() {
+            map = L.map('map').setView([23.7, 121], 7);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                maxZoom: 19
+            }).addTo(map);
+        }
+
+        function loadData() {
+            Papa.parse(csvContent.trim(), {
+                header: true, skipEmptyLines: true,
+                complete: function(results) {
+                    rawData = results.data.filter(d => d.縣市 && d.學校名稱);
+                    initFilters();
+                    updateDashboard();
+                }
+            });
+        }
+
+        function initFilters() {
+            const years = [...new Set(rawData.map(d => d.年度))].sort();
+            const yearSel = document.getElementById('yearSelect');
+            years.forEach(y => yearSel.add(new Option(y + '年', y)));
+
+            const cities = Object.keys(cityCoords);
+            const citySel = document.getElementById('citySelect');
+            cities.forEach(c => citySel.add(new Option(c, c)));
+
+            const schemes = [...new Set(rawData.map(d => d.方案))].filter(Boolean);
+            const schemeSel = document.getElementById('schemeSelect');
+            schemes.forEach(s => schemeSel.add(new Option(s, s)));
+        }
+
+        function resetFilters() {
+            document.getElementById('yearSelect').value = 'all';
+            document.getElementById('citySelect').value = 'all';
+            document.getElementById('schemeSelect').value = 'all';
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            currentPage = 1;
+            const selYear = document.getElementById('yearSelect').value;
+            const selCity = document.getElementById('citySelect').value;
+            const selScheme = document.getElementById('schemeSelect').value;
+
+            filteredData = rawData.filter(d => {
+                return (selYear === 'all' || d.年度 == selYear) &&
+                       (selCity === 'all' || d.縣市 === selCity) &&
+                       (selScheme === 'all' || d.方案 === selScheme);
+            });
+
+            document.getElementById('kpiVisits').textContent = filteredData.length;
+            const uniqueSchools = new Set(filteredData.map(d => d.學校名稱 + d.縣市));
+            document.getElementById('kpiUniqueSchools').textContent = uniqueSchools.size;
+            const uniqueCities = new Set(filteredData.map(d => d.縣市));
+            document.getElementById('kpiCities').textContent = uniqueCities.size;
+
+            updateMapDisplay();
+            renderCharts();
+            renderTable();
+        }
+
+        function getJitter() { return (Math.random() - 0.5) * 0.04; }
+
+        function updateMapDisplay() {
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+            filteredData.forEach(d => {
+                const center = cityCoords[d.縣市];
+                if(center) {
+                    const lat = center[0] + getJitter();
+                    const lng = center[1] + getJitter();
+                    const color = schemeColors[d.方案] || '#999';
+                    const marker = L.circleMarker([lat, lng], {
+                        radius: 6, fillColor: color, color: "#fff", weight: 1, opacity: 1, fillOpacity: 0.8
+                    }).addTo(map);
+                    const popupContent = `<div class="font-bold text-base text-blue-900">${d.學校名稱}</div><div class="text-sm text-gray-600">${d.縣市} | ${d.年度}</div><div class="mt-2 inline-block px-2 py-0.5 rounded text-white text-xs shadow" style="background:${color}">${d.方案}</div>`;
+                    marker.bindPopup(popupContent);
+                    markers.push(marker);
+                }
+            });
+            document.getElementById('mapDisplayCount').textContent = filteredData.length;
+        }
+
+        function renderCharts() {
+            const cityUniqueCounts = {};
+            const schoolsTracker = new Set();
+            filteredData.forEach(d => {
+                const key = d.縣市 + "-" + d.學校名稱;
+                if (!schoolsTracker.has(key)) {
+                    schoolsTracker.add(key);
+                    cityUniqueCounts[d.縣市] = (cityUniqueCounts[d.縣市] || 0) + 1;
+                }
+            });
+
+            const sortedUniqueCities = Object.entries(cityUniqueCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+            const ctxUnique = document.getElementById('uniqueCityChart').getContext('2d');
+            if(charts.unique) charts.unique.destroy();
+            charts.unique = new Chart(ctxUnique, {
+                type: 'bar',
+                data: {
+                    labels: sortedUniqueCities.map(d => d[0]),
+                    datasets: [{ label: '校數', data: sortedUniqueCities.map(d => d[1]), backgroundColor: '#6366f1', borderRadius: 4 }]
+                },
+                options: { indexAxis: 'y', maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true } } }
+            });
+
+            const coverageData = [];
+            Object.keys(cityUniqueCounts).forEach(city => {
+                const participating = cityUniqueCounts[city];
+                const total = totalSchoolsData[city] || 100;
+                const rate = ((participating / total) * 100).toFixed(1);
+                coverageData.push({ city, rate, participating, total });
+            });
+            coverageData.sort((a, b) => b.rate - a.rate);
+            const topCoverage = coverageData.slice(0, 12);
+
+            const ctxCoverage = document.getElementById('coverageChart').getContext('2d');
+            if(charts.coverage) charts.coverage.destroy();
+            charts.coverage = new Chart(ctxCoverage, {
+                type: 'bar',
+                data: {
+                    labels: topCoverage.map(d => d.city),
+                    datasets: [{ label: '覆蓋率 (%)', data: topCoverage.map(d => d.rate), backgroundColor: '#10b981', borderRadius: 4, barPercentage: 0.7 }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, max: Math.max(...topCoverage.map(d=>d.rate)) > 20 ? undefined : 20 } },
+                    plugins: { tooltip: { callbacks: { label: (ctx) => { const d = topCoverage[ctx.dataIndex]; return `${d.rate}% (${d.participating}/${d.total}校)`; } } } }
+                }
+            });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('schoolTableBody');
+            tbody.innerHTML = '';
+            const totalRows = filteredData.length;
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            if (currentPage > totalPages) currentPage = 1;
+            document.getElementById('tableInfo').textContent = `共 ${totalRows} 筆`;
+            document.getElementById('pageIndicator').textContent = totalRows > 0 ? `第 ${currentPage} / ${totalPages} 頁` : '無資料';
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage >= totalPages || totalPages === 0;
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = filteredData.slice(start, end);
+
+            pageData.forEach(d => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-blue-50 border-b border-slate-50 transition-colors";
+                const color = schemeColors[d.方案] || '#999';
+                tr.innerHTML = `<td class="px-3 py-2 text-slate-500 font-mono text-center">${d.年度}</td><td class="px-3 py-2 font-medium">${d.縣市}</td><td class="px-3 py-2 text-slate-700 font-semibold">${d.學校名稱}</td><td class="px-3 py-2 text-right"><span class="px-2 py-0.5 rounded text-[10px] text-white whitespace-nowrap shadow-sm" style="background:${color}">${d.方案}</span></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function changePage(delta) { currentPage += delta; renderTable(); }
+    </script>
+</body>
+</html>
