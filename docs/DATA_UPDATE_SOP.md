@@ -52,6 +52,9 @@ npm run data:audit
 - 先回報數字變化、原因與異常處理結果。
 - 提供使用者檢查版本。
 - 未取得「同意發布」前，不發布或更新正式網站。
+- 取得同意後執行 `npm run build:pages`，確認 `out/index.html` 與 `out/_next/` 已產生。
+- 將 `out/` 的靜態成果同步至 repository 根目錄，保留 `.nojekyll`，再提交至 GitHub。
+- 等待 GitHub Pages 完成建置後，實際檢查 `https://codekok.github.io/quanta-dashboard/`，不得只檢查轉址或原 Sites 網址。
 
 ## 6. 更新紀錄
 

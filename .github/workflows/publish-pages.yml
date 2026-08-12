@@ -1,0 +1,58 @@
+name: Publish GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "public/**"
+      - "next.config.ts"
+      - "package.json"
+      - "package-lock.json"
+      - "scripts/**"
+      - ".github/workflows/publish-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-pages-publish
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    if: ${{ !contains(github.event.head_commit.message || '', '[pages output]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run data:audit
+      - run: npm run lint
+      - run: npm run build:pages
+      - name: Sync static site to repository root
+        run: |
+          rm -rf _next data 404.html
+          cp -R out/_next ./_next
+          cp -R out/data ./data
+          cp out/index.html ./index.html
+          cp out/404.html ./404.html
+          cp out/logo.png ./logo.png
+          cp out/favicon.svg ./favicon.svg
+          touch .nojekyll
+      - name: Commit generated GitHub Pages site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html 404.html _next data logo.png favicon.svg .nojekyll
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Publish GitHub Pages [pages output]"
+          git push

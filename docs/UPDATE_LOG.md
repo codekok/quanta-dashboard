@@ -1,10 +1,17 @@
 # 更新紀錄
 
+## 2026-08-12｜改為真正的 GitHub Pages 網站
+
+- 移除根目錄 `index.html` 的外部網址轉址，改為完整靜態網站。
+- 正式網址維持 `https://codekok.github.io/quanta-dashboard/`。
+- 新增 `/quanta-dashboard/` 子路徑相容設定，確保資料、Logo、樣式與互動程式可正常載入。
+- 新增 GitHub Pages 自動建置與根目錄發布流程；之後原始碼或資料更新可由 Codex 依同一流程管理。
+- 資料稽核維持：623 所學校、1,208 校次、24 個參與地區。
+
 ## 2026-08-12｜匯入新版教育影響力地圖
 
 - 以目前已發布的「廣達游於智教育影響力地圖」取代舊版單頁網站。
 - 匯入廣達《游於智》計畫與廣達游智盃資料、互動功能及響應式版面。
 - 加入 `AGENTS.md`、校名規則、資料更新 SOP、Codex 固定更新指令及自動檢查流程。
-- 移除舊版 `all_schools_data.csv` 與根目錄 `logo.png`；新版資料與 Logo 分別位於 `public/data/` 與 `public/logo.png`。
-- 根目錄 `index.html` 保留為舊 GitHub Pages 網址的轉址頁，導向目前正式網站。
+- 移除舊版 `all_schools_data.csv`；新版資料與 Logo 分別位於 `public/data/` 與 `public/logo.png`。
 - 廣達游智盃驗收基準：623 所學校、1,208 校次、24 個參與地區。

@@ -69,6 +69,7 @@ const cityByMapId: Record<string, string> = {
 
 const years = [107, 108, 109, 110, 111, 112, 113, 114];
 const types = ["國小", "國中", "其他高中", "實驗教育機構"];
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const uniqueUnits = (rows: RecordRow[]) =>
   new Set(rows.map((row) => `${row.city}|${row.school}`));
@@ -201,14 +202,14 @@ export default function Home() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/data/participation.json").then((response) => response.json()),
-      fetch("/data/denominators.json").then((response) => response.json()),
+      fetch(`${basePath}/data/participation.json`).then((response) => response.json()),
+      fetch(`${basePath}/data/denominators.json`).then((response) => response.json()),
     ]).then(([records, denominatorRows]) => {
       setRows(records);
       setDenominators(denominatorRows);
     });
   }, []);
-  useEffect(() => { fetch("/data/competition.json").then((response) => response.json()).then(setCompetition); }, []);
+  useEffect(() => { fetch(`${basePath}/data/competition.json`).then((response) => response.json()).then(setCompetition); }, []);
 
   const cities = useMemo(
     () => [...new Set(rows.map((row) => row.city))].sort((a, b) => a.localeCompare(b, "zh-TW")),
@@ -333,7 +334,7 @@ export default function Home() {
     <main>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="回到頁首">
-          <Image src="/logo.png" alt="廣達文教基金會" width={184} height={70} priority unoptimized />
+          <Image src={`${basePath}/logo.png`} alt="廣達文教基金會" width={184} height={70} priority unoptimized />
           <span>廣達游於智教育影響力地圖</span>
         </a>
         <nav aria-label="主要導覽">
@@ -461,7 +462,7 @@ export default function Home() {
             </div>
             <div className="map-content">
               <svg viewBox={Taiwan.viewBox} className="taiwan-map" role="img" aria-label="臺灣縣市參與分布圖">
-                {Taiwan.locations.map((location) => {
+                {Taiwan.locations.map((location: { id: string; path: string }) => {
                   const cityName = cityByMapId[location.id];
                   const value = mapValue(cityName);
                   const display = mapMode === "units" ? `${value} 個參與單位` : `${formatPercent(value)} 累計觸及率`;
@@ -508,7 +509,7 @@ export default function Home() {
         <p>科技教育的價值，不只在做出一件作品，<br />而是讓孩子相信：<strong>我能觀察、我能嘗試、我能把想法實現。</strong></p>
       </section>
 
-      <footer><div><Image src="/logo.png" alt="廣達文教基金會" width={192} height={76} unoptimized /><span>廣達游於智教育影響力地圖</span></div><p>資料期間：107–114 學年度 · 測試版資料更新：2026.08</p><small>本網站統計以《游於智》歷年參與紀錄為基礎；國小與國中覆蓋率依正式學校名錄分開計算。</small></footer>
+      <footer><div><Image src={`${basePath}/logo.png`} alt="廣達文教基金會" width={192} height={76} unoptimized /><span>廣達游於智教育影響力地圖</span></div><p>資料期間：107–114 學年度 · 測試版資料更新：2026.08</p><small>本網站統計以《游於智》歷年參與紀錄為基礎；國小與國中覆蓋率依正式學校名錄分開計算。</small></footer>
     </>}
     </main>
   );

@@ -15,7 +15,6 @@
 3. `public/data/competition.json`
 4. `public/data/participation.json`
 5. `public/data/denominators.json`
-6. `docs/UPDATE_LOG.md`
 
 ## 不可違反的規則
 
@@ -46,8 +45,16 @@
 
 6. 檢查桌機與手機版，至少測試篩選、搜尋、分頁、學校跨屆紀錄與地圖點選。
 7. 回報統計變化及原因，先提供可檢查版本。
-8. 在 `docs/UPDATE_LOG.md` 記錄資料來源、統計變化、例外處理與發布狀態。
-9. 只有收到「同意發布」後才可發布。
+8. 只有收到「同意發布」後才可發布。
+
+## 正式網站與 GitHub Pages
+
+- GitHub Pages 正式網址：`https://codekok.github.io/quanta-dashboard/`。
+- GitHub Pages 目前由 `main` 分支根目錄提供；根目錄 `index.html` 必須是完整靜態網站，不得改回轉址頁。
+- 原始碼或資料更新並獲得發布同意後，執行 `npm run build:pages`，再將 `out/` 內的靜態成果同步至 repository 根目錄。
+- 必須保留根目錄 `.nojekyll`，並確認所有資源使用 `/quanta-dashboard/` 子路徑。
+- GitHub Actions 會在原始碼提交後自動重建並提交 GitHub Pages 靜態成果；若自動流程失敗，不得宣稱網站已更新。
+- `codingkok.chatgpt.site` 版本可作為預覽或備援，但不得作為 GitHub Pages 網址的轉址目標。
 
 ## 完成條件
 
@@ -55,4 +62,5 @@
 - 統計總數、地區數與校次變化均有合理解釋。
 - 校名規則抽查通過，搜尋結果未拆分同校或誤合併不同校。
 - 桌機與手機主要功能可正常使用。
+- GitHub Pages 靜態建置通過，且正式網址不再轉址。
 - 已留下本次更新摘要，並等待或取得發布授權。
