@@ -5,5 +5,6 @@
 - 以目前已發布的「廣達游於智教育影響力地圖」取代舊版單頁網站。
 - 匯入廣達《游於智》計畫與廣達游智盃資料、互動功能及響應式版面。
 - 加入 `AGENTS.md`、校名規則、資料更新 SOP、Codex 固定更新指令及自動檢查流程。
-- 移除舊版 `index.html`、`all_schools_data.csv` 與根目錄 `logo.png`；新版資料與 Logo 分別位於 `public/data/` 與 `public/logo.png`。
+- 移除舊版 `all_schools_data.csv` 與根目錄 `logo.png`；新版資料與 Logo 分別位於 `public/data/` 與 `public/logo.png`。
+- 根目錄 `index.html` 保留為舊 GitHub Pages 網址的轉址頁，導向目前正式網站。
 - 廣達游智盃驗收基準：623 所學校、1,208 校次、24 個參與地區。
