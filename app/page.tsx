@@ -67,7 +67,7 @@ const cityByMapId: Record<string, string> = {
   "yunlin-county": "雲林縣",
 };
 
-const years = [107, 108, 109, 110, 111, 112, 113, 114];
+const years = [107, 108, 109, 110, 111, 112, 113, 114, 115];
 const types = ["國小", "國中", "其他高中", "實驗教育機構"];
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -360,7 +360,7 @@ export default function Home() {
         </div>
         <div className="hero-panel" aria-label="計畫推動期間">
           <span>IMPACT SINCE 2018</span>
-          <strong className="impact-period"><b>2018—2025</b><em>107—114 學年度</em></strong>
+          <strong className="impact-period"><b>2018—2026</b><em>107—115 學年度</em></strong>
           <p>全台科技教育行動</p>
           <div className="circuit-lines" aria-hidden="true"><i /><i /><i /></div>
         </div>
@@ -370,7 +370,7 @@ export default function Home() {
         <MetricCard value={rows.length || 903} label="累計參與校次" note="跨學年度與方案的參與紀錄" />
         <MetricCard value={rows.length ? uniqueUnits(rows).size : 438} label="參與學校／單位" note="包含正式學校與實驗教育機構" />
         <MetricCard value={rows.length ? new Set(rows.map((row) => row.city)).size : 20} label="參與縣市" note="足跡持續擴展至全台" />
-        <MetricCard value={8} label="推動學年度" note="107 至 114 學年度" />
+        <MetricCard value={9} label="推動學年度" note="107 至 115 學年度" />
       </section>
 
       <section className="story-section" id="about">
@@ -388,7 +388,7 @@ export default function Home() {
 
       <section className="impact-section" id="impact">
         <div className="section-heading split-heading">
-          <div><p className="section-kicker">DATA EXPLORER</p><h2>看見八年累積的教育足跡</h2></div>
+          <div><p className="section-kicker">DATA EXPLORER</p><h2>看見九年累積的教育足跡</h2></div>
           <p>使用篩選器，探索不同學年度、縣市與方案的參與成果。</p>
         </div>
 
@@ -428,7 +428,7 @@ export default function Home() {
         <div className="analytics-grid">
           <article className="data-card trend-card">
             <div className="card-heading"><div><small>歷年推廣趨勢</small><h3>參與規模逐年累積</h3></div><div className="legend"><span><i className="records-dot" />校次</span><span><i className="units-dot" />單位</span></div></div>
-            <div className="trend-chart" role="img" aria-label="107 至 114 學年度校次與參與單位趨勢">
+            <div className="trend-chart" role="img" aria-label="107 至 115 學年度校次與參與單位趨勢">
               {trend.map((item) => (
                 <div className="trend-column" key={item.year} title={`${item.year}學年度：${item.records}校次、${item.units}單位`}>
                   <div className="bar-pair"><i className="records-bar" style={{ height: `${(item.records / maxTrend) * 100}%` }} /><i className="units-bar" style={{ height: `${(item.units / maxTrend) * 100}%` }} /></div>
@@ -509,7 +509,7 @@ export default function Home() {
         <p>科技教育的價值，不只在做出一件作品，<br />而是讓孩子相信：<strong>我能觀察、我能嘗試、我能把想法實現。</strong></p>
       </section>
 
-      <footer><div><Image src={`${basePath}/logo.png`} alt="廣達文教基金會" width={192} height={76} unoptimized /><span>廣達游於智教育影響力地圖</span></div><p>資料期間：107–114 學年度 · 測試版資料更新：2026.08</p><small>本網站統計以《游於智》歷年參與紀錄為基礎；國小與國中覆蓋率依正式學校名錄分開計算。</small></footer>
+      <footer><div><Image src={`${basePath}/logo.png`} alt="廣達文教基金會" width={192} height={76} unoptimized /><span>廣達游於智教育影響力地圖</span></div><p>資料期間：107–115 學年度</p><small>本網站統計以《游於智》歷年參與紀錄為基礎；國小與國中覆蓋率依正式學校名錄分開計算。</small></footer>
     </>}
     </main>
   );
