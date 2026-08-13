@@ -7,6 +7,8 @@
 - 新增「縣市合作」方案；附件中同學年度、同校、同方案的重複列示已合併，未刪除歷史參與紀錄。
 - 115 學年度新增紀錄包含 111 筆國小與 17 筆國中資料；國立臺東大學附設實驗國民小學歸於臺東縣。
 - 完成資料稽核、Lint、TypeScript 與 GitHub Pages 靜態建置；正式網站僅呈現資料期間，未顯示附件來源或暫定資料文字。
+- 發布提交：[a7c47df](https://github.com/codekok/quanta-dashboard/commit/a7c47df293f32de0da130b1a8c575098bc75dcea)；GitHub Pages 靜態產物提交：[0cddbbd](https://github.com/codekok/quanta-dashboard/commit/0cddbbd052fd6be25ea2ca9c8dd813248fd93a34)。
+- GitHub Actions「pages build and deployment」、「Publish GitHub Pages」及「Validate dashboard」皆成功；已實測正式網址直接顯示、非轉址，並載入 1,031 筆資料。
 
 ## 2026-08-12｜改為真正的 GitHub Pages 網站
 
