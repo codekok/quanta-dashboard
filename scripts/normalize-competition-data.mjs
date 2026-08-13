@@ -170,6 +170,6 @@ data.editions = [...new Set(data.records.map((row) => row.editionNo))]
     };
   });
 
-data.meta.note = "同屆同校已合併；跨屆以校名鍵統一計算；臺南市東區與永康區博愛國小分開統計；越南胡志明市臺灣學校統一列為海外－越南；不分學校類型；原始資料未提供隊伍名稱或編號。";
+data.meta.note = "";
 
 fs.writeFileSync(dataPath, `${JSON.stringify(data)}\n`);
