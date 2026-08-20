@@ -2,6 +2,15 @@ import fs from "node:fs";
 
 const dataPath = new URL("../public/data/competition.json", import.meta.url);
 const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+const teamsByEdition = new Map([
+  [1, 355],
+  [2, 835],
+  [3, 858],
+  [4, 905],
+  [5, 1519],
+  [6, 1586],
+  [7, 1056],
+]);
 
 const universityExperimentalSchoolNames = new Map([
   ["國立嘉義大學附設實驗國小", "國立嘉義大學附設實驗小學"],
@@ -167,6 +176,7 @@ data.editions = [...new Set(data.records.map((row) => row.editionNo))]
       schools: new Set(rows.map((row) => row.schoolKey)).size,
       counties: new Set(rows.map((row) => row.county)).size,
       awardSchools: new Set(rows.filter((row) => row.award).map((row) => row.schoolKey)).size,
+      teams: teamsByEdition.get(editionNo) ?? 0,
     };
   });
 

@@ -209,6 +209,7 @@ footer small { grid-column: 1 / -1; color: #80979d; }
 .competition-hero-card small { color: #e0ebeb; font-size: 19px; font-weight: 800; }
 .competition-content { padding: 88px max(24px, calc((100vw - 1180px) / 2)); }
 .competition-metrics { width: 100%; margin: 0 0 32px; }
+.competition-metrics { grid-template-columns: repeat(5, 1fr); }
 .competition-filters { display: grid; grid-template-columns: 1fr 1fr 2fr auto; gap: 12px; padding: 20px; background: white; border: 1px solid var(--line); }
 .competition-filters label { display: grid; gap: 7px; color: var(--muted); font-size: 12px; font-weight: 800; }
 .competition-filters select, .competition-filters input { height: 43px; border: 1px solid var(--line); background: #fbfcfa; padding: 0 12px; border-radius: 5px; outline: none; }
@@ -235,6 +236,7 @@ footer small { grid-column: 1 / -1; color: #80979d; }
 .edition-grid b, .edition-grid span, .edition-grid small { display: block; }
 .edition-grid b { color: var(--teal); font-size: 12px; }
 .edition-grid strong { display: block; font: 44px Georgia,serif; margin: 15px 0 2px; }
+.edition-grid strong.edition-teams { font-size: 28px; margin: 10px 0 1px; color: var(--teal-deep); }
 .edition-grid span, .edition-grid small { color: var(--muted); font-size: 11px; }
 .competition-school-card { margin-top: 20px; }
 .data-note { margin: 0; color: var(--muted); font-size: 13px; }
