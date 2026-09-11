@@ -19,7 +19,7 @@ const additions = [
   { city: "宜蘭縣", district: "蘇澳鎮", originalName: "文化國中", school: "縣立文化國中", division: "國中", program: "策略聯盟", status: "現存", coverage: "國中", identity: "正式學校", type: "國中" },
   { city: "宜蘭縣", district: "礁溪鄉", originalName: "礁溪國小", school: "縣立礁溪國小", division: "國小", program: "策略聯盟", status: "現存", coverage: "國小", identity: "正式學校", type: "國小" },
   { city: "苗栗縣", district: "苗栗市", originalName: "建功國小", school: "縣立建功國小", program: "全國甄選", division: "國小", status: "現存", coverage: "國小", identity: "正式學校", type: "國小" },
-  { city: "彰化縣", district: "芳苑鄉", originalName: "芙朝國小", school: "縣立芙朝國小", program: "縣市合作", division: "國小", status: "現存", coverage: "國小", identity: "正式學校", type: "國小" },
+  { city: "彰化縣", district: "埤頭鄉", originalName: "芙朝國小", school: "縣立芙朝國小", program: "縣市合作", division: "國小", status: "現存", coverage: "國小", identity: "正式學校", type: "國小" },
 ];
 
 const year = 115;

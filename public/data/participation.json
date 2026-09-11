@@ -14099,22 +14099,6 @@
   },
   {
     "year": 115,
-    "program": "縣市合作",
-    "key": "彰化縣｜縣立芙朝國小｜115｜縣市合作",
-    "source": "基金會提供115學年度暫定名單（2026-08-13）",
-    "provisional": true,
-    "city": "彰化縣",
-    "district": "芳苑鄉",
-    "originalName": "芙朝國小",
-    "school": "縣立芙朝國小",
-    "division": "國小",
-    "status": "現存",
-    "coverage": "國小",
-    "identity": "正式學校",
-    "type": "國小"
-  },
-  {
-    "year": 115,
     "city": "彰化縣",
     "district": "芳苑鄉",
     "originalName": "建新國小",
@@ -14256,6 +14240,22 @@
     "key": "彰化縣｜縣立大園國小｜115｜縣市合作",
     "source": "基金會提供115學年度暫定名單（2026-08-13）",
     "provisional": true
+  },
+  {
+    "year": 115,
+    "program": "縣市合作",
+    "key": "彰化縣｜縣立芙朝國小｜115｜縣市合作",
+    "source": "基金會提供115學年度暫定名單（2026-08-13）",
+    "provisional": true,
+    "city": "彰化縣",
+    "district": "埤頭鄉",
+    "originalName": "芙朝國小",
+    "school": "縣立芙朝國小",
+    "division": "國小",
+    "status": "現存",
+    "coverage": "國小",
+    "identity": "正式學校",
+    "type": "國小"
   },
   {
     "year": 115,
