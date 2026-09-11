@@ -4,6 +4,7 @@ const dataPath = new URL("../public/data/participation.json", import.meta.url);
 const removals = [
   { city: "雲林縣", school: "三和國小" },
   { city: "臺南市", school: "紀安國小" },
+  { city: "臺南市", school: "臺南市立九份子國民中小學" },
 ];
 const additions = [
   { city: "臺北市", district: "大安區", originalName: "金華國小", school: "市立金華國小", division: "國小", status: "現存", coverage: "國小", identity: "正式學校", type: "國小" },
@@ -16,6 +17,8 @@ const additions = [
   { city: "宜蘭縣", district: "員山鄉", originalName: "同樂國小", school: "縣立同樂國小", division: "國小", program: "策略聯盟", status: "現存", coverage: "國小", identity: "正式學校", type: "國小" },
   { city: "宜蘭縣", district: "宜蘭市", originalName: "南屏國小", school: "縣立南屏國小", division: "國小", program: "策略聯盟", status: "現存", coverage: "國小", identity: "正式學校", type: "國小" },
   { city: "宜蘭縣", district: "蘇澳鎮", originalName: "文化國中", school: "縣立文化國中", division: "國中", program: "策略聯盟", status: "現存", coverage: "國中", identity: "正式學校", type: "國中" },
+  { city: "宜蘭縣", district: "礁溪鄉", originalName: "礁溪國小", school: "縣立礁溪國小", division: "國小", program: "策略聯盟", status: "現存", coverage: "國小", identity: "正式學校", type: "國小" },
+  { city: "苗栗縣", district: "苗栗市", originalName: "建功國小", school: "縣立建功國小", program: "全國甄選", division: "國小", status: "現存", coverage: "國小", identity: "正式學校", type: "國小" },
 ];
 
 const year = 115;
@@ -25,6 +28,7 @@ const strategySchools = new Set([
   "宜蘭縣|同樂國小",
   "宜蘭縣|南屏國小",
   "宜蘭縣|文化國中",
+  "宜蘭縣|礁溪國小",
 ]);
 const countyPartnershipSchools = new Set([
   "彰化縣|大村國小", "彰化縣|村上國小", "彰化縣|文祥國小", "彰化縣|新生國小", "彰化縣|南興國小", "彰化縣|興華國小", "彰化縣|文開國小", "彰化縣|福德國小", "彰化縣|花壇國小", "彰化縣|陝西國小", "彰化縣|建新國小", "彰化縣|饒明國小", "彰化縣|草港國小", "彰化縣|線西國小", "彰化縣|平和國小", "彰化縣|和仁國小", "彰化縣|新庄國小", "彰化縣|大園國小", "彰化縣|湖北國小", "彰化縣|湖東國小", "彰化縣|育新國小", "彰化縣|埔心國小", "彰化縣|日新國小", "彰化縣|石牌國小", "彰化縣|大興國小", "彰化縣|二林國小", "彰化縣|鹿東國小", "彰化縣|大榮國小", "彰化縣|舊社國小", "彰化縣|明禮國小", "彰化縣|員林國小", "彰化縣|媽厝國小", "彰化縣|鳳霞國小", "彰化縣|員東國小", "彰化縣|美豐國小", "彰化縣|土庫國小", "彰化縣|螺陽國小", "彰化縣|舊館國小", "彰化縣|萬興國小", "彰化縣|竹塘國小", "彰化縣|好修國小", "彰化縣|永興國小", "彰化縣|溪湖國中", "彰化縣|和美高中國中部",

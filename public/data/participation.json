@@ -12692,6 +12692,22 @@
   {
     "year": 115,
     "program": "策略聯盟",
+    "key": "宜蘭縣｜縣立礁溪國小｜115｜策略聯盟",
+    "source": "基金會提供115學年度暫定名單（2026-08-13）",
+    "provisional": true,
+    "city": "宜蘭縣",
+    "district": "礁溪鄉",
+    "originalName": "礁溪國小",
+    "school": "縣立礁溪國小",
+    "division": "國小",
+    "status": "現存",
+    "coverage": "國小",
+    "identity": "正式學校",
+    "type": "國小"
+  },
+  {
+    "year": 115,
+    "program": "策略聯盟",
     "key": "宜蘭縣｜縣立成功國小｜115｜策略聯盟",
     "source": "基金會提供115學年度暫定名單（2026-08-13）",
     "provisional": true,
@@ -12912,6 +12928,22 @@
     "key": "苗栗縣｜縣立新開國小｜115｜全國甄選",
     "source": "基金會提供115學年度暫定名單（2026-08-13）",
     "provisional": true
+  },
+  {
+    "year": 115,
+    "program": "全國甄選",
+    "key": "苗栗縣｜縣立建功國小｜115｜全國甄選",
+    "source": "基金會提供115學年度暫定名單（2026-08-13）",
+    "provisional": true,
+    "city": "苗栗縣",
+    "district": "苗栗市",
+    "originalName": "建功國小",
+    "school": "縣立建功國小",
+    "division": "國小",
+    "status": "現存",
+    "coverage": "國小",
+    "identity": "正式學校",
+    "type": "國小"
   },
   {
     "year": 115,
@@ -14750,22 +14782,6 @@
     "identity": "正式學校",
     "type": "國小",
     "key": "臺南市｜市立安順國小｜115｜全國甄選",
-    "source": "基金會提供115學年度暫定名單（2026-08-13）",
-    "provisional": true
-  },
-  {
-    "year": 115,
-    "city": "臺南市",
-    "district": "安南區",
-    "originalName": "臺南市立九份子國民中小學",
-    "school": "臺南市立九份子國民中小學",
-    "division": "國小",
-    "program": "全國甄選",
-    "status": "現存",
-    "coverage": "國小",
-    "identity": "正式學校",
-    "type": "國小",
-    "key": "臺南市｜臺南市立九份子國民中小學｜115｜全國甄選",
     "source": "基金會提供115學年度暫定名單（2026-08-13）",
     "provisional": true
   },
